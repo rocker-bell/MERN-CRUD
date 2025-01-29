@@ -1,0 +1,11 @@
+.wrapper {
+  width: 90vw;
+  min-height: 400px;
+  background-color: aliceblue;
+  border: 1px dashed black;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}

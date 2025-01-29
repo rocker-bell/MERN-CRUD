@@ -1,0 +1,71 @@
+.UserTable {
+    width: 60vw;
+    margin: 50px auto;
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0,5);
+}
+
+.table{
+    width: 100%;
+    margin-top: 40px;
+}
+
+.userTable table thead th{
+    background-color: darkslategray;
+    color: white;
+}
+
+.UserTable table tbody td{
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.actionLink-container  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    
+}
+
+.Link-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+
+}
+
+
+.icon{
+    width: 20px;
+    height: 20px
+}
+
+/* Link Link-primary style  */
+
+.Link {
+    padding: 10px;
+    border: 1px solid black;
+    text-decoration: none;
+    color: white;
+}
+
+.Link-primary {
+    background-color: blue;
+}
+
+.fa-user-plus {
+    margin: 5px;
+}
+
+/*  */
+
+.noData {
+    margin-top: 20px;
+}
