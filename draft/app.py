@@ -9,9 +9,9 @@ def home():
 
 @app.route("/pgcd")
 def pgcd_calculator():
-    p = "Le Diviseur"
-    q = "Quotient"
-    r = "Le Reste"
+    p = "p_value"
+    q = "q_value"
+    r = "r_value"
     langs = ["Python", "Flask", "Math"] # Added so your loop has data
 
     # 2. FIXED: Changed 'render.template' to 'render_template'

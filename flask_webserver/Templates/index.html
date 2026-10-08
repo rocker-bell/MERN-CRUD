@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Template App</title>
+</head>
+<body>
+
+    <!-- 3. FIXED: Using the unique variable names passed from Python -->
+    <h1>quotion: {{ quotion }}</h1>
+    <h1>reste: {{ reste }}</h1>
+    <h1>poton: {{ poton }}</h1>
+
+    <h3>Skills to learn:</h3>
+    <ul>
+        {% for lang in programming_languages %}
+            <li>{{ lang }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
