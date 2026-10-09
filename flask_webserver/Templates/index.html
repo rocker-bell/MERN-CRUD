@@ -7,7 +7,23 @@
 <body>
 
     <!-- 3. FIXED: Using the unique variable names passed from Python -->
-    <h1>quotion: {{ quotion }}</h1>
+     <div class="Numberscontainer">
+        <form action="/pgcd" method="POST">
+        <span class="form-group">
+        <label for="">nombre a</label>
+        <input type="number" id="nombre_a" name="nombre_a" placeholder="nombre a">
+        </span>
+        <span>
+        <label for="">nombre b</label>
+        <input type="number" id="nombre_b" name="nombre_b" placeholder="nombre b">
+        </span>
+
+        <button type="submit">calculer le pgcd</button>
+        </form>
+
+        <h1>pgcd {{ pgcd }}</h1>
+     </div>
+    <!-- <h1>quotion: {{ quotion }}</h1>
     <h1>reste: {{ reste }}</h1>
     <h1>poton: {{ poton }}</h1>
 
@@ -16,7 +32,7 @@
         {% for lang in programming_languages %}
             <li>{{ lang }}</li>
         {% endfor %}
-    </ul>
+    </ul> -->
 
 </body>
 </html>
