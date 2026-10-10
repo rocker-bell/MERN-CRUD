@@ -2,10 +2,11 @@ name: Deploy Python DOM Example
 
 'on':
   push:
-    branches: [main]
+    branches:
+      - 'MERN/DJANDO'
     paths:
-      - "python-dom-example/**"
-      - ".github/workflows/deploy-python-example.yml"
+      - 'python-dom-example/**'
+      - '.github/workflows/deploy-python-example.yml'
   workflow_dispatch:
 
 permissions:
@@ -19,11 +20,11 @@ concurrency:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
