@@ -1,6 +1,6 @@
 name: Deploy Python DOM Example
 
-on:
+'on':
   push:
     branches: [main]
     paths:
