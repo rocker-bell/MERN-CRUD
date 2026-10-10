@@ -3,9 +3,7 @@ name: Deploy Python DOM Example
 'on':
   push:
     branches:
-      - 'main'
-      - 'MERN/DJANDO'
-      
+      - 'MERN/DJANGO'
     paths:
       - 'python-dom-example/**'
       - '.github/workflows/deploy-python-example.yml'
@@ -17,7 +15,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: github-pages-test
   cancel-in-progress: true
 
 jobs:
@@ -31,6 +29,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: MERN/DJANGO
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
