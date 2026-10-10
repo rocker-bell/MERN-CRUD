@@ -3,7 +3,9 @@ name: Deploy Python DOM Example
 'on':
   push:
     branches:
+      - 'main'
       - 'MERN/DJANDO'
+      
     paths:
       - 'python-dom-example/**'
       - '.github/workflows/deploy-python-example.yml'
