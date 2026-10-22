@@ -1,38 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flask Template App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calcul PGCD et PPCM</title>
 </head>
 <body>
+    <h1>Calcul du PGCD et du PPCM</h1>
 
-    <!-- 3. FIXED: Using the unique variable names passed from Python -->
-     <div class="Numberscontainer">
-        <form action="/pgcd" method="POST">
-        <span class="form-group">
-        <label for="">nombre a</label>
-        <input type="number" id="nombre_a" name="nombre_a" placeholder="nombre a">
-        </span>
-        <span>
-        <label for="">nombre b</label>
-        <input type="number" id="nombre_b" name="nombre_b" placeholder="nombre b">
-        </span>
+    <form action="/" method="POST">
+        <div class="form-group">
+            <label for="nombre_a">Nombre A :</label>
+            <input
+                type="number"
+                id="nombre_a"
+                name="nombre_a"
+                required
+            >
+        </div>
 
-        <button type="submit">calculer le pgcd</button>
-        </form>
+        <div class="form-group">
+            <label for="nombre_b">Nombre B :</label>
+            <input
+                type="number"
+                id="nombre_b"
+                name="nombre_b"
+                required
+            >
+        </div>
 
-        <h1>pgcd {{ pgcd }}</h1>
-     </div>
-    <!-- <h1>quotion: {{ quotion }}</h1>
-    <h1>reste: {{ reste }}</h1>
-    <h1>poton: {{ poton }}</h1>
+        <button type="submit">Calculer</button>
+    </form>
 
-    <h3>Skills to learn:</h3>
-    <ul>
-        {% for lang in programming_languages %}
-            <li>{{ lang }}</li>
-        {% endfor %}
-    </ul> -->
+    {% if pgcd is not none and ppcm is not none %}
+
+        <h2>Résultats</h2>
+
+        <p>
+            PGCD de {{ a }} et {{ b }} :
+            <strong>{{ pgcd }}</strong>
+        </p>
+
+        <p>
+            PPCM de {{ a }} et {{ b }} :
+            <strong>{{ ppcm }}</strong>
+        </p>
+
+        <h2>Étapes de la division euclidienne (PGCD)</h2>
+
+        {% if etapes %}
+            {% for etape in etapes %}
+                <p>
+                    {{ etape.dividende }} =
+                    {{ etape.diviseur }} ×
+                    {{ etape.quotient }} +
+                    {{ etape.reste }}
+                </p>
+            {% endfor %}
+
+            <p>
+                Donc PGCD = <strong>{{ pgcd }}</strong>
+            </p>
+        {% else %}
+            <p>
+                Aucune division nécessaire pour ce calcul.
+            </p>
+        {% endif %}
+
+        <h2>Étapes du calcul du PPCM</h2>
+
+        {% if a == 0 or b == 0 %}
+
+            <p>
+                Le PPCM est égal à 0 car au moins
+                un des deux nombres est nul.
+            </p>
+
+            {% if a == 0 and b == 0 %}
+                <p>
+                    Les deux nombres sont nuls.
+                    Le PPCM est défini ici comme 0.
+                </p>
+            {% endif %}
+
+        {% else %}
+
+            {% for etape in etapes_ppcm %}
+                <p>
+                    Multiple testé : {{ etape.multiple }}
+                    — divisible par {{ a }} :
+                    {{ "Oui" if etape.divisible_a else "Non" }}
+                    — divisible par {{ b }} :
+                    {{ "Oui" if etape.divisible_b else "Non" }}
+                </p>
+            {% endfor %}
+
+            <p>
+                Donc PPCM = <strong>{{ ppcm }}</strong>
+            </p>
+
+        {% endif %}
+
+    {% endif %}
 
 </body>
 </html>
+<style>
+.form-group {
+    margin: 5px 5px;
+}
+</style>
