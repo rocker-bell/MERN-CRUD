@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     <title>Calcul PGCD et PPCM</title>
 </head>
 <body>
@@ -12,25 +13,54 @@
             <nav class="nav-bar">
                     <h1>Home - Operateurs des Nombres</h1>
 
-                    <span class="right-nav">
-                        <ul class="tools_Lists">
-                            <li class="tool_list">PGCD-PPCM</li>
-                            <li class="tool_list">CONGRUENCE-Fermat</li>
-                            <li class="tool_list">BEZOUT</li>
-                            <li class="tool_list">Indicatrice d'euler</li>
-                            <li class="tool_list">Inverse-modulaire</li>
-                        </ul>
-                    </span>
+                        
+                <span class="right-nav">
+                    <ul class="tools_Lists">
+
+                        <li class="tool_list pgcd-ppcm"
+                           >
+                            PGCD-PPCM
+                        </li>
+
+                        <li class="tool_list congruence_fermat"
+                           >
+                            CONGRUENCE-Fermat
+                        </li>
+
+                        <li class="tool_list bezout"
+                            >
+                            BEZOUT
+                        </li>
+
+                        <li class="tool_list indicatrice_euler"
+                            >
+                            Indicatrice d'Euler
+                        </li>
+
+                        <li class="tool_list inverse_modulaire"
+                            >
+                            Inverse modulaire
+                        </li>
+
+                        <li class="tool_list chiffrements_rsa"
+                            >
+                            Chiffrement RSA
+                        </li>
+
+                    </ul>
+                </span>
+
             </nav>
 
-            
-        <div class="form_results_container pgcd-ppcm">
             <div class="sideBar-container">
             <span class="side-bar">
                 <button type="button">sauvegarder</button>
                 <button type="restaurer">restaurer</button>
             </span>
             </div>
+            
+        <div class="form_results_container pgcd-ppcm">
+            
 
              <form action="/" method="POST">
         <div class="form-group">
@@ -129,10 +159,21 @@
 
         </div>
 
-        <div class="form_results_container fermat"></div>
-        <div class="form_results_container bezout"></div>
-        <div class="form_results_container indicatrice_d'euler"></div>
-        <div class="form_results_container inverse_modulaire"></div>
+        <div class="form_results_container congruence_fermat">
+            <h1>fermat</h1>
+        </div>
+        <div class="form_results_container bezout">
+            <h1>bezout</h1>
+        </div>
+        <div class="form_results_container indicatrice_euler">
+            <h1>euler</h1>
+        </div>
+        <div class="form_results_container inverse_modulaire">
+            <h1>inverse_modulaire</h1>
+        </div>
+        <div class="form_results_container chiffrements_rsa">
+            <h1>chiffrements_rsa</h1>
+        </div>
 
 
 
@@ -149,8 +190,3 @@
 }
 </style> -->
 
-<script>
-
-
-
-</script>
