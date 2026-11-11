@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <title>Calcul PGCD et PPCM</title>
+</head>
+<body data-operation="{{ operation }}">
+    <div class="main_container">
+
+            <nav class="nav-bar">
+                    <h1>Home - Operateurs des Nombres</h1>
+
+                        
+                <span class="right-nav">
+                    <ul class="tools_Lists">
+
+                        <li class="tool_list pgcd-ppcm"
+                           >
+                            PGCD-PPCM
+                        </li>
+
+                        <li class="tool_list congruence_fermat_bezout"
+                           >
+                            CONGRUENCE-Fermat-bezout
+                        </li>
+
+                        <!-- <li class="tool_list bezout"
+                            >
+                            BEZOUT
+                        </li> -->
+
+                        <li class="tool_list indicatrice_euler"
+                            >
+                            Indicatrice d'Euler
+                        </li>
+
+                        <li class="tool_list inverse_modulaire"
+                            >
+                            Inverse modulaire
+                        </li>
+
+                        <li class="tool_list chiffrements_rsa"
+                            >
+                            Chiffrement RSA
+                        </li>
+
+                    </ul>
+                </span>
+
+            </nav>
+
+            <!-- <div class="sideBar-container">
+            <span class="side-bar">
+                <button type="button">sauvegarder</button>
+                <button type="restaurer">restaurer</button>
+            </span>
+            </div> -->
+
+            <div class="form_group">
+            
+        <div class="form_results_container pgcd-ppcm" data-operation="pgcd_ppcm">
+
+             <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>1. PGCD (Plus Grand Commun Diviseur) :</strong><br><br>
+    Le PGCD de deux entiers est le plus grand entier positif qui divise simultanément ces deux nombres.<br><br>
+    <strong>Propriété :</strong><br>
+    Si PGCD(a, b) = 1, alors a et b sont premiers entre eux.<br><br>
+
+    <strong>2. PPCM (Plus Petit Commun Multiple) :</strong><br><br>
+    Le PPCM de deux entiers est le plus petit entier strictement positif qui est un multiple commun de ces deux nombres.<br><br>
+    <strong>Relation fondamentale :</strong><br>
+    PGCD(a, b) × PPCM(a, b) = |a × b|
+</span>
+
+                    <div class="save-restore">
+                        <button type="button" class="save-btn">
+                            Sauvegarder JSON
+                        </button>
+
+                        <button type="button" class="restore-btn">
+                            Restaurer JSON
+                        </button>
+
+                        <input type="file"
+                            class="restore-file"
+                            accept=".json,application/json"
+                            hidden>
+                    </div>
+               
+            </span>
+            </div>
+            
+
+             <form action="{{ url_for('calcul') }}" method="POST">
+        <div class="form-group">
+            <label for="nombre_a">Nombre A :</label>
+            <input
+                type="number"
+                id="nombre_a"
+                name="nombre_a"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="nombre_b">Nombre B :</label>
+            <input
+                type="number"
+                id="nombre_b"
+                name="nombre_b"
+                required
+            >
+        </div>
+
+        <button type="submit">Calculer</button>
+    </form>
+
+    {% if pgcd is not none and ppcm is not none %}
+
+        <h2>Résultats</h2>
+
+        <p>
+            PGCD de {{ a }} et {{ b }} :
+            <strong>{{ pgcd }}</strong>
+        </p>
+
+        <p>
+            PPCM de {{ a }} et {{ b }} :
+            <strong>{{ ppcm }}</strong>
+        </p>
+
+        <h2>Étapes de la division euclidienne (PGCD)</h2>
+
+        {% if etapes %}
+            {% for etape in etapes %}
+                <p>
+                    {{ etape.dividende }} =
+                    {{ etape.diviseur }} ×
+                    {{ etape.quotient }} +
+                    {{ etape.reste }}
+                </p>
+            {% endfor %}
+
+            <p>
+                Donc PGCD = <strong>{{ pgcd }}</strong>
+            </p>
+        {% else %}
+            <p>
+                Aucune division nécessaire pour ce calcul.
+            </p>
+        {% endif %}
+
+        <h2>Étapes du calcul du PPCM</h2>
+
+        {% if a == 0 or b == 0 %}
+
+            <p>
+                Le PPCM est égal à 0 car au moins
+                un des deux nombres est nul.
+            </p>
+
+            {% if a == 0 and b == 0 %}
+                <p>
+                    Les deux nombres sont nuls.
+                    Le PPCM est défini ici comme 0.
+                </p>
+            {% endif %}
+
+        {% else %}
+
+            {% for etape in etapes_ppcm %}
+                <p>
+                    Multiple testé : {{ etape.multiple }}
+                    — divisible par {{ a }} :
+                    {{ "Oui" if etape.divisible_a else "Non" }}
+                    — divisible par {{ b }} :
+                    {{ "Oui" if etape.divisible_b else "Non" }}
+                </p>
+            {% endfor %}
+
+            <p>
+                Donc PPCM = <strong>{{ ppcm }}</strong>
+            </p>
+
+        {% endif %}
+
+    {% endif %}
+
+        </div>
+
+       
+        
+
+        <div class="form_results_container congruence_fermat_bezout"  data-operation="congruence_fermat_bezout">
+
+    <h2>Congruence, petit théorème de Fermat et Bézout</h2>
+
+    <!-- FORMULAIRE FERMAT -->
+    <form action="{{ url_for('calcul') }}" method="POST">
+         <div class="sideBar-container">
+            <!-- <span class="side-bar">
+                
+                <button type="button">sauvegarder</button>
+                <button type="restaurer">restaurer</button>
+            </span> -->
+            </div>
+
+        <h3>1. Congruence et théorème de Fermat</h3>
+
+        <input type="hidden" name="operation"
+               value="congruence_fermat">
+
+        <div class="form-group">
+            <label for="base">Base (a) :</label>
+            <input type="number" id="base"
+                   name="base" required>
+        </div>
+
+        <div class="form-group">
+            <label for="exposant">Exposant (n) :</label>
+            <input type="number" id="exposant"
+                   name="exposant" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="modulo">Modulo (p) :</label>
+            <input type="number" id="modulo"
+                   name="modulo" min="2" required>
+        </div>
+
+        <button type="submit">
+            Calculer la congruence et Fermat
+        </button>
+
+    </form>
+
+    <div class="result-box">
+
+        {% if congruence is defined and congruence %}
+
+            <h3>Résultat de la congruence</h3>
+
+            <p>{{ congruence.message }}</p>
+
+            <h3>Petit théorème de Fermat</h3>
+
+            <p>{{ primalite }}</p>
+
+            {% if fermat_steps %}
+                <h4>Étapes du calcul</h4>
+
+                {% for etape in fermat_steps %}
+                    <p>{{ etape }}</p>
+                {% endfor %}
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    <hr>
+
+    <!-- FORMULAIRE BEZOUT -->
+
+    <form action="/" method="POST">
+
+         <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>1. Congruence :</strong><br>
+    Deux entiers a et b sont congrus modulo n si leur différence est divisible par n.<br>
+    a ≡ b (mod n) ⟺ n | (a − b)<br><br>
+
+    <strong>2. Petit théorème de Fermat :</strong><br>
+    Si p est un nombre premier et si p ne divise pas a, alors :<br>
+    a<sup>p−1</sup> ≡ 1 (mod p)<br><br>
+
+    <strong>3. Identité de Bézout :</strong><br>
+    Pour deux entiers a et b, il existe deux entiers u et v tels que :<br>
+    au + bv = PGCD(a, b)<br><br>
+    Si PGCD(a, b) = 1, alors :<br>
+    au + bv = 1
+</span>
+                <div class="save-restore">
+                    <button type="button" class="save-btn">
+                        Sauvegarder JSON
+                    </button>
+
+                    <button type="button" class="restore-btn">
+                        Restaurer JSON
+                    </button>
+
+                    <input type="file"
+                        class="restore-file"
+                        accept=".json,application/json"
+                        hidden>
+                </div>
+            </span>
+            </div>
+
+        <h3>2. Identité de Bézout</h3>
+
+        <input type="hidden" name="operation"
+               value="bezout">
+
+        <div class="form-group">
+            <label for="bezout_a">Premier entier (a) :</label>
+            <input type="number" id="bezout_a"
+                   name="bezout_a" required>
+        </div>
+
+        <div class="form-group">
+            <label for="bezout_b">Deuxième entier (b) :</label>
+            <input type="number" id="bezout_b"
+                   name="bezout_b" required>
+        </div>
+
+        <button type="submit">
+            Calculer les coefficients de Bézout
+        </button>
+
+    </form>
+
+    <!-- <div class="result-box">
+
+        {% if bezout is defined and bezout %}
+
+            <h3>Résultat de Bézout</h3>
+
+            <p>Nombre a : {{ bezout.a }}</p>
+
+            <p>Nombre b : {{ bezout.b }}</p>
+
+            <p>PGCD : {{ bezout.pgcd }}</p>
+
+            <h4>Coefficients de Bézout</h4>
+
+            <p>u = {{ bezout.u }}</p>
+
+            <p>v = {{ bezout.v }}</p>
+
+            <h4>Vérification</h4>
+
+            <p>
+                {{ bezout.a }} × ({{ bezout.u }})
+                + {{ bezout.b }} × ({{ bezout.v }})
+                = {{ bezout.pgcd }}
+            </p>
+
+        {% endif %}
+
+    </div> -->
+    <div class="result-box">
+
+    {% if bezout is defined and bezout %}
+
+        <h3>Résultat de Bézout</h3>
+
+        <p>Premier entier : {{ bezout.a }}</p>
+        <p>Deuxième entier : {{ bezout.b }}</p>
+
+        <h4>1. Test de primalité</h4>
+
+        <p>
+            {{ bezout.a }} :
+            {% if bezout.premier_a %}
+                Est un nombre premier.
+            {% else %}
+                N'est pas un nombre premier.
+            {% endif %}
+        </p>
+
+        <p>
+            {{ bezout.b }} :
+            {% if bezout.premier_b %}
+                Est un nombre premier.
+            {% else %}
+                N'est pas un nombre premier.
+            {% endif %}
+        </p>
+
+        <h4>2. Divisions successives (Euclide)</h4>
+
+        {% for etape in bezout.etapes %}
+
+            <p>
+                {{ etape.r0 }} =
+                {{ etape.r1 }} ×
+                {{ etape.quotient }} +
+                {{ etape.reste }}
+            </p>
+
+        {% endfor %}
+
+        <h4>3. Résultat du PGCD</h4>
+
+        <p>
+            PGCD({{ bezout.a }}, {{ bezout.b }}) =
+            <strong>{{ bezout.pgcd }}</strong>
+        </p>
+
+        <h4>4. Coefficients de Bézout</h4>
+
+        <p>
+            u = <strong>{{ bezout.u }}</strong>
+        </p>
+
+        <p>
+            v = <strong>{{ bezout.v }}</strong>
+        </p>
+
+        <h4>5. Identité de Bézout</h4>
+
+        <p>
+            {{ bezout.a }} × ({{ bezout.u }})
+            +
+            {{ bezout.b }} × ({{ bezout.v }})
+            =
+            {{ bezout.pgcd }}
+        </p>
+
+        <p>
+            <strong>Vérification :</strong>
+            {{ bezout.a * bezout.u + bezout.b * bezout.v }}
+            =
+            {{ bezout.pgcd }}
+        </p>
+
+    {% endif %}
+
+</div>
+</div>
+
+
+        <div class="form_results_container indicatrice_euler" data-operation="indicatrice_euler">
+
+    <h2>Fonction indicatrice d'Euler</h2>
+
+    <form action="/" method="POST">
+
+         <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>Indicatrice d'Euler :</strong><br><br>
+    L'indicatrice d'Euler d'un entier n est le nombre d'entiers positifs inférieurs ou égaux à n qui sont premiers avec n (leur PGCD est égal à 1).
+</span>
+                <button type="button">sauvegarder</button>
+                <button type="restaurer">restaurer</button>
+            </span>
+            </div>
+
+        <div class="form-group">
+            <label for="euler_n">Entier positif (n) :</label>
+            <input type="number" id="euler_n"
+                   name="euler_n" min="1" required>
+        </div>
+
+        <button type="submit" name="operation"
+                value="indicatrice_euler">
+            Calculer φ(n)
+        </button>
+
+    </form>
+
+    <!-- <div class="result-box">
+
+        <h3>Résultat</h3>
+
+        {% if euler_result is defined and euler_result is not none %}
+
+            <p>Nombre étudié : {{ euler_n }}</p>
+
+            <p>
+                Décomposition en facteurs premiers :
+                {{ euler_factorisation }}
+            </p>
+
+            <p>
+                φ({{ euler_n }}) =
+                <strong>{{ euler_result }}</strong>
+            </p>
+
+            <h4>Entiers premiers avec n</h4>
+
+            {% if euler_coprimes is defined %}
+                <p>{{ euler_coprimes | join(', ') }}</p>
+            {% endif %}
+
+        {% endif %}
+
+    </div> -->
+    
+<div class="result-box">
+
+    {% if euler_result is not none and euler_result is defined %}
+
+        <h3>Résultat de l'indicatrice d'Euler</h3>
+
+        <p>
+            Nombre étudié :
+            <strong>{{ euler_n }}</strong>
+        </p>
+
+        <p>
+            Décomposition en facteurs premiers :
+            <strong>{{ euler_factorisation }}</strong>
+        </p>
+
+        <h3>Étapes du calcul</h3>
+
+        {% for etape in euler_etapes %}
+
+            <div class="etape-box">
+
+                <h4>
+                    Étape {{ loop.index }} :
+                    {{ etape.titre }}
+                </h4>
+
+                <p>
+                    {{ etape.description }}
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+        <h3>Résultat final</h3>
+
+        <p class="resultat-final">
+            φ({{ euler_n }}) =
+            <strong>{{ euler_result }}</strong>
+        </p>
+
+        <h3>Entiers premiers avec n</h3>
+
+        <p>
+            {{ euler_coprimes | join(', ') }}
+        </p>
+
+    {% endif %}
+
+</div>
+
+</div>
+       <div class="form_results_container inverse_modulaire" data-operation="inverse_modulaire">
+         <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>Inverse modulaire :</strong><br><br>
+    Un entier est l'inverse modulaire d'un autre entier modulo m si leur produit donne un reste égal à 1 lors de la division par m.
+</span>
+            <div class="save-restore">
+                <button type="button" class="save-btn">
+                    Sauvegarder JSON
+                </button>
+
+                <button type="button" class="restore-btn">
+                    Restaurer JSON
+                </button>
+
+                <input type="file"
+                    class="restore-file"
+                    accept=".json,application/json"
+                    hidden>
+            </div>
+            </span>
+            </div>
+
+    <h2>Calcul de l'inverse modulaire</h2>
+
+    <form action="{{ url_for('calcul') }}" method="POST">
+
+        <div class="form-group">
+            <label for="inverse_a">Entier a :</label>
+            <input type="number" id="inverse_a"
+                   name="inverse_a" required>
+        </div>
+
+        <div class="form-group">
+            <label for="inverse_n">Modulo n :</label>
+            <input type="number" id="inverse_n"
+                   name="inverse_n" min="2" required>
+        </div>
+
+        <button type="submit" name="operation"
+                value="inverse_modulaire">
+            Calculer l'inverse
+        </button>
+
+    </form>
+
+    <div class="result-box">
+
+        <h3>Résultat</h3>
+
+        {% if inverse_result is defined and inverse_result is not none %}
+
+            <p>
+                Inverse de {{ inverse_a }} modulo {{ inverse_n }} :
+                <strong>{{ inverse_result }}</strong>
+            </p>
+
+            <p>
+                Vérification :
+                ({{ inverse_a }} × {{ inverse_result }})
+                mod {{ inverse_n }} = 1
+            </p>
+
+            <h4>Étapes de calcul</h4>
+
+            {% for etape in inverse_steps %}
+                <p>{{ etape }}</p>
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+</div>
+       
+
+<div class="form_results_container chiffrements_rsa"  data-operation="chiffrements_rsa">
+     <div class="sideBar-container">
+                   
+
+            <span class="side-bar">
+                 <span class="regle">
+    <strong>Règle fondamentale de RSA :</strong><br>
+    e × d ≡ 1 (mod φ(n))<br><br>
+
+    <strong>Avec :</strong><br>
+    • e : exposant public.<br>
+    • d : exposant privé.<br>
+    • φ(n) : indicateur d'Euler, calculé par (p − 1) × (q − 1).<br>
+    • n : module RSA, calculé par p × q.<br>
+    • p et q : deux grands nombres premiers secrets.<br><br>
+
+    <strong>Explication :</strong><br>
+    d est l'inverse multiplicatif de e modulo φ(n).
+    Autrement dit, le produit e × d doit donner un reste égal à 1
+    lorsqu'il est divisé par φ(n).
+</span>
+                <div class="save-restore">
+                <button type="button" class="save-btn">
+                    Sauvegarder JSON
+                </button>
+
+                <button type="button" class="restore-btn">
+                    Restaurer JSON
+                </button>
+
+                <input type="file"
+                    class="restore-file"
+                    accept=".json,application/json"
+                    hidden>
+            </div>
+            </span>
+            </div>
+
+    <h2>Chiffrement RSA</h2>
+
+    <form action="{{ url_for('calcul') }}" method="POST">
+
+        <input type="hidden"
+               name="operation"
+               value="chiffrements_rsa">
+
+        <div class="form-group">
+            <label for="rsa_p">Premier nombre premier (p) :</label>
+            <input type="number" id="rsa_p"
+                   name="rsa_p" min="2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rsa_q">Deuxième nombre premier (q) :</label>
+            <input type="number" id="rsa_q"
+                   name="rsa_q" min="2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rsa_e">Exposant public (e) :</label>
+            <input type="number" id="rsa_e"
+                   name="rsa_e" min="2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rsa_message">Message numérique (M) :</label>
+            <input type="number" id="rsa_message"
+                   name="rsa_message" min="0" required>
+        </div>
+
+        <button type="submit">
+            Chiffrer et déchiffrer
+        </button>
+
+    </form>
+
+    
+
+ 
+    <div class="result-box">
+
+    {% if erreur %}
+
+        <h3>Erreur RSA</h3>
+        <p class="erreur">{{ erreur }}</p>
+
+    {% elif rsa_result %}
+
+        <h3>Résultats du chiffrement RSA</h3>
+
+        <p>{{ rsa_result.message_resultat }}</p>
+
+        <h4>1. Paramètres RSA</h4>
+
+        <p>p = {{ rsa_result.p }}</p>
+        <p>q = {{ rsa_result.q }}</p>
+
+        <h4>2. Calcul de n</h4>
+
+        <p>n = {{ rsa_result.n }}</p>
+
+        <h4>3. Indicatrice d'Euler</h4>
+
+        <p>φ(n) = {{ rsa_result.phi }}</p>
+
+        <h4>4. Clés RSA</h4>
+
+        <p>Clé publique : ({{ rsa_result.e }}, {{ rsa_result.n }})</p>
+
+        <p>Clé privée : ({{ rsa_result.d }}, {{ rsa_result.n }})</p>
+
+        <h4>5. Chiffrement</h4>
+
+        <p>Message original : {{ rsa_result.message }}</p>
+
+        <p>Message chiffré :
+            <strong>{{ rsa_result.cipher }}</strong>
+        </p>
+
+        <h4>6. Déchiffrement</h4>
+
+        <p>Message déchiffré :
+            <strong>{{ rsa_result.decrypted }}</strong>
+        </p>
+
+        <h4>7. Vérification finale</h4>
+
+        {% if rsa_result.verification %}
+            <p><strong>Réussie</strong></p>
+        {% else %}
+            <p><strong>Échec</strong></p>
+        {% endif %}
+
+        <h3>Étapes détaillées de RSA</h3>
+
+        {% for etape in rsa_result.etapes %}
+            <div class="etape-box">
+                <p>{{ etape }}</p>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+</div>
+</div>
+
+   
+
+</div>
+
+         <div>
+        {% if erreur %}
+    <div class="error-box">
+        <strong>Erreur :</strong> {{ erreur }}
+    </div>
+{% endif %}
+    </div>
+
+    </div>
+    
+
+   
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Form Submission</title>
+
+    <link rel="stylesheet"
+          href="https://pyscript.net/releases/2025.8.1/core.css">
+    <script type="module"
+            src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+</head>
+<body>
+    <h2>Submit Form with Python</h2>
+
+    <form id="myForm">
+        <input id="username" type="text"
+               placeholder="Enter your name" required>
+        <button id="submitBtn" type="submit">Submit</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script type="py" src="./main.py"></script>
+</body>
+</html>
