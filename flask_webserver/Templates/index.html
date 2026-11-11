@@ -64,7 +64,7 @@
         <div class="form_results_container pgcd-ppcm">
             
 
-             <form action="/" method="POST">
+             <form action="{{ url_for('calcul') }}" method="POST">
         <div class="form-group">
             <label for="nombre_a">Nombre A :</label>
             <input
@@ -161,72 +161,15 @@
 
         </div>
 
-        <!-- <div class="form_results_container congruence_fermat_bezout">
-            <h1>fermat</h1>
-        </div> -->
+       
         
-<!-- <div class="form_results_container congruence_fermat_bezout">
 
-    <h2>Congruence et petit théorème de Fermat</h2>
-
-    <form action="/" method="POST">
-
-        <div class="form-group">
-            <label for="base">Base (a) :</label>
-            <input type="number" id="base"
-                   name="base" required>
-        </div>
-
-        <div class="form-group">
-            <label for="exposant">Exposant (n) :</label>
-            <input type="number" id="exposant"
-                   name="exposant" min="0" required>
-        </div>
-
-        <div class="form-group">
-            <label for="modulo">Modulo (p) :</label>
-            <input type="number" id="modulo"
-                   name="modulo" min="2" required>
-        </div>
-
-        <button type="submit" name="operation"
-                value="congruence_fermat">
-            Étudier la congruence
-        </button>
-
-    </form>
-
-    <div class="result-box">
-        <h3>Résultats de l'étude</h3>
-
-        {% if congruence_result is defined and congruence_result is not none %}
-
-            <p>Nombre étudié : {{ base }}</p>
-            <p>Exposant : {{ exposant }}</p>
-            <p>Modulo : {{ modulo }}</p>
-
-            <p>{{ primalite }}</p>
-
-            <h4>Calcul de la congruence</h4>
-            <p>{{ congruence_result }}</p>
-
-            {% if fermat_steps is defined %}
-                <h4>Étapes du calcul</h4>
-                {% for etape in fermat_steps %}
-                    <p>{{ etape }}</p>
-                {% endfor %}
-            {% endif %}
-
-        {% endif %}
-    </div>
-
-</div> -->
         <div class="form_results_container congruence_fermat_bezout">
 
     <h2>Congruence, petit théorème de Fermat et Bézout</h2>
 
     <!-- FORMULAIRE FERMAT -->
-    <form action="/" method="POST">
+    <form action="{{ url_for('calcul') }}" method="POST">
 
         <h3>1. Congruence et théorème de Fermat</h3>
 
@@ -421,9 +364,6 @@
 </div>
 
 
-        <!-- <div class="form_results_container bezout">
-            <h1>bezout</h1>
-        </div> -->
         <div class="form_results_container indicatrice_euler">
 
     <h2>Fonction indicatrice d'Euler</h2>
@@ -528,7 +468,7 @@
 
     <h2>Calcul de l'inverse modulaire</h2>
 
-    <form action="/" method="POST">
+    <form action="{{ url_for('calcul') }}" method="POST">
 
         <div class="form-group">
             <label for="inverse_a">Entier a :</label>
@@ -577,11 +517,17 @@
     </div>
 
 </div>
-        <div class="form_results_container chiffrements_rsa">
+       
+
+<div class="form_results_container chiffrements_rsa">
 
     <h2>Chiffrement RSA</h2>
 
-    <form action="/" method="POST">
+    <form action="{{ url_for('calcul') }}" method="POST">
+
+        <input type="hidden"
+               name="operation"
+               value="chiffrements_rsa">
 
         <div class="form-group">
             <label for="rsa_p">Premier nombre premier (p) :</label>
@@ -607,45 +553,90 @@
                    name="rsa_message" min="0" required>
         </div>
 
-        <button type="submit" name="operation"
-                value="chiffrements_rsa">
+        <button type="submit">
             Chiffrer et déchiffrer
         </button>
 
     </form>
 
+    
+
+ 
     <div class="result-box">
 
-        <h3>Résultats RSA</h3>
+    {% if erreur %}
 
-        {% if rsa_result is defined and rsa_result is not none %}
+        <h3>Erreur RSA</h3>
+        <p class="erreur">{{ erreur }}</p>
 
-            <p>n = {{ rsa_result.n }}</p>
+    {% elif rsa_result %}
 
-            <p>φ(n) = {{ rsa_result.phi }}</p>
+        <h3>Résultats du chiffrement RSA</h3>
 
-            <p>Clé publique : ({{ rsa_result.e }}, {{ rsa_result.n }})</p>
+        <p>{{ rsa_result.message_resultat }}</p>
 
-            <p>Clé privée : ({{ rsa_result.d }}, {{ rsa_result.n }})</p>
+        <h4>1. Paramètres RSA</h4>
 
-            <h4>Chiffrement</h4>
+        <p>p = {{ rsa_result.p }}</p>
+        <p>q = {{ rsa_result.q }}</p>
 
-            <p>Message original : {{ rsa_result.message }}</p>
+        <h4>2. Calcul de n</h4>
 
-            <p>Message chiffré : <strong>{{ rsa_result.cipher }}</strong></p>
+        <p>n = {{ rsa_result.n }}</p>
 
-            <h4>Déchiffrement</h4>
+        <h4>3. Indicatrice d'Euler</h4>
 
-            <p>
-                Message déchiffré :
-                <strong>{{ rsa_result.decrypted }}</strong>
-            </p>
+        <p>φ(n) = {{ rsa_result.phi }}</p>
 
+        <h4>4. Clés RSA</h4>
+
+        <p>Clé publique : ({{ rsa_result.e }}, {{ rsa_result.n }})</p>
+
+        <p>Clé privée : ({{ rsa_result.d }}, {{ rsa_result.n }})</p>
+
+        <h4>5. Chiffrement</h4>
+
+        <p>Message original : {{ rsa_result.message }}</p>
+
+        <p>Message chiffré :
+            <strong>{{ rsa_result.cipher }}</strong>
+        </p>
+
+        <h4>6. Déchiffrement</h4>
+
+        <p>Message déchiffré :
+            <strong>{{ rsa_result.decrypted }}</strong>
+        </p>
+
+        <h4>7. Vérification finale</h4>
+
+        {% if rsa_result.verification %}
+            <p><strong>Réussie</strong></p>
+        {% else %}
+            <p><strong>Échec</strong></p>
         {% endif %}
 
-    </div>
+        <h3>Étapes détaillées de RSA</h3>
+
+        {% for etape in rsa_result.etapes %}
+            <div class="etape-box">
+                <p>{{ etape }}</p>
+            </div>
+        {% endfor %}
+
+    {% endif %}
 
 </div>
+</div>
+
+    <div>
+        {% if erreur %}
+    <div class="error-box">
+        <strong>Erreur :</strong> {{ erreur }}
+    </div>
+{% endif %}
+    </div>
+
 </div>
 
 
@@ -656,9 +647,3 @@
 
 </body>
 </html>
-<!-- <style>
-.form-group {
-    margin: 5px 5px;
-}
-</style> -->
-
