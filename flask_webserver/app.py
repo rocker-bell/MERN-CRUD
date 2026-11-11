@@ -1,6 +1,9 @@
 
 from flask import Flask, render_template, request
 
+
+import json
+
 app = Flask(__name__)
 
 
@@ -67,6 +70,21 @@ def calcul():
             ppcm = multiple
             # ppcm = int ( (a * b) / pgcd ) (lcm(a, b))
 
+            #fermat
+
+
+
+            # bezout 
+
+
+            
+
+
+            #indicatrice_d'euler
+
+
+            #inverse_modulaire
+
     return render_template(
         "index.html",
         pgcd=pgcd,
@@ -76,6 +94,12 @@ def calcul():
         etapes=etapes,
         etapes_ppcm=etapes_ppcm
     )
+
+
+# @app.route('/sauvegarder-restaurer', methods=["GET", "POST"])
+# def sauvegrader()
+
+
 
 
 if __name__ == "__main__":

@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Calcul PGCD et PPCM</title>
 </head>
 <body>
-    <h1>Calcul du PGCD et du PPCM</h1>
+    <div class="main_container">
 
-    <form action="/" method="POST">
+            <nav class="nav-bar">
+                    <h1>Home - Operateurs des Nombres</h1>
+
+                    <span class="right-nav">
+                        <ul class="tools_Lists">
+                            <li class="tool_list">PGCD-PPCM</li>
+                            <li class="tool_list">CONGRUENCE-Fermat</li>
+                            <li class="tool_list">BEZOUT</li>
+                            <li class="tool_list">Indicatrice d'euler</li>
+                            <li class="tool_list">Inverse-modulaire</li>
+                        </ul>
+                    </span>
+            </nav>
+
+            
+        <div class="form_results_container pgcd-ppcm">
+            <div class="sideBar-container">
+            <span class="side-bar">
+                <button type="button">sauvegarder</button>
+                <button type="restaurer">restaurer</button>
+            </span>
+            </div>
+
+             <form action="/" method="POST">
         <div class="form-group">
             <label for="nombre_a">Nombre A :</label>
             <input
@@ -103,10 +127,30 @@
 
     {% endif %}
 
+        </div>
+
+        <div class="form_results_container fermat"></div>
+        <div class="form_results_container bezout"></div>
+        <div class="form_results_container indicatrice_d'euler"></div>
+        <div class="form_results_container inverse_modulaire"></div>
+
+
+
+    </div>
+    
+
+   
+
 </body>
 </html>
-<style>
+<!-- <style>
 .form-group {
     margin: 5px 5px;
 }
-</style>
+</style> -->
+
+<script>
+
+
+
+</script>
