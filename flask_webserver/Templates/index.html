@@ -52,16 +52,48 @@
 
             </nav>
 
-            <div class="sideBar-container">
+            <!-- <div class="sideBar-container">
             <span class="side-bar">
                 <button type="button">sauvegarder</button>
                 <button type="restaurer">restaurer</button>
             </span>
-            </div>
+            </div> -->
 
             <div class="form_group">
             
-        <div class="form_results_container pgcd-ppcm">
+        <div class="form_results_container pgcd-ppcm" data-operation="pgcd_ppcm">
+
+             <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>1. PGCD (Plus Grand Commun Diviseur) :</strong><br><br>
+    Le PGCD de deux entiers est le plus grand entier positif qui divise simultanément ces deux nombres.<br><br>
+    <strong>Propriété :</strong><br>
+    Si PGCD(a, b) = 1, alors a et b sont premiers entre eux.<br><br>
+
+    <strong>2. PPCM (Plus Petit Commun Multiple) :</strong><br><br>
+    Le PPCM de deux entiers est le plus petit entier strictement positif qui est un multiple commun de ces deux nombres.<br><br>
+    <strong>Relation fondamentale :</strong><br>
+    PGCD(a, b) × PPCM(a, b) = |a × b|
+</span>
+
+                    <div class="save-restore">
+                        <button type="button" class="save-btn">
+                            Sauvegarder JSON
+                        </button>
+
+                        <button type="button" class="restore-btn">
+                            Restaurer JSON
+                        </button>
+
+                        <input type="file"
+                            class="restore-file"
+                            accept=".json,application/json"
+                            hidden>
+                    </div>
+               
+            </span>
+            </div>
             
 
              <form action="{{ url_for('calcul') }}" method="POST">
@@ -164,12 +196,19 @@
        
         
 
-        <div class="form_results_container congruence_fermat_bezout">
+        <div class="form_results_container congruence_fermat_bezout"  data-operation="congruence_fermat_bezout">
 
     <h2>Congruence, petit théorème de Fermat et Bézout</h2>
 
     <!-- FORMULAIRE FERMAT -->
     <form action="{{ url_for('calcul') }}" method="POST">
+         <div class="sideBar-container">
+            <!-- <span class="side-bar">
+                
+                <button type="button">sauvegarder</button>
+                <button type="restaurer">restaurer</button>
+            </span> -->
+            </div>
 
         <h3>1. Congruence et théorème de Fermat</h3>
 
@@ -229,6 +268,40 @@
     <!-- FORMULAIRE BEZOUT -->
 
     <form action="/" method="POST">
+
+         <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>1. Congruence :</strong><br>
+    Deux entiers a et b sont congrus modulo n si leur différence est divisible par n.<br>
+    a ≡ b (mod n) ⟺ n | (a − b)<br><br>
+
+    <strong>2. Petit théorème de Fermat :</strong><br>
+    Si p est un nombre premier et si p ne divise pas a, alors :<br>
+    a<sup>p−1</sup> ≡ 1 (mod p)<br><br>
+
+    <strong>3. Identité de Bézout :</strong><br>
+    Pour deux entiers a et b, il existe deux entiers u et v tels que :<br>
+    au + bv = PGCD(a, b)<br><br>
+    Si PGCD(a, b) = 1, alors :<br>
+    au + bv = 1
+</span>
+                <div class="save-restore">
+                    <button type="button" class="save-btn">
+                        Sauvegarder JSON
+                    </button>
+
+                    <button type="button" class="restore-btn">
+                        Restaurer JSON
+                    </button>
+
+                    <input type="file"
+                        class="restore-file"
+                        accept=".json,application/json"
+                        hidden>
+                </div>
+            </span>
+            </div>
 
         <h3>2. Identité de Bézout</h3>
 
@@ -364,11 +437,22 @@
 </div>
 
 
-        <div class="form_results_container indicatrice_euler">
+        <div class="form_results_container indicatrice_euler" data-operation="indicatrice_euler">
 
     <h2>Fonction indicatrice d'Euler</h2>
 
     <form action="/" method="POST">
+
+         <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>Indicatrice d'Euler :</strong><br><br>
+    L'indicatrice d'Euler d'un entier n est le nombre d'entiers positifs inférieurs ou égaux à n qui sont premiers avec n (leur PGCD est égal à 1).
+</span>
+                <button type="button">sauvegarder</button>
+                <button type="restaurer">restaurer</button>
+            </span>
+            </div>
 
         <div class="form-group">
             <label for="euler_n">Entier positif (n) :</label>
@@ -464,7 +548,29 @@
 </div>
 
 </div>
-       <div class="form_results_container inverse_modulaire">
+       <div class="form_results_container inverse_modulaire" data-operation="inverse_modulaire">
+         <div class="sideBar-container">
+            <span class="side-bar">
+                <span class="regle">
+    <strong>Inverse modulaire :</strong><br><br>
+    Un entier est l'inverse modulaire d'un autre entier modulo m si leur produit donne un reste égal à 1 lors de la division par m.
+</span>
+            <div class="save-restore">
+                <button type="button" class="save-btn">
+                    Sauvegarder JSON
+                </button>
+
+                <button type="button" class="restore-btn">
+                    Restaurer JSON
+                </button>
+
+                <input type="file"
+                    class="restore-file"
+                    accept=".json,application/json"
+                    hidden>
+            </div>
+            </span>
+            </div>
 
     <h2>Calcul de l'inverse modulaire</h2>
 
@@ -519,7 +625,43 @@
 </div>
        
 
-<div class="form_results_container chiffrements_rsa">
+<div class="form_results_container chiffrements_rsa"  data-operation="chiffrements_rsa">
+     <div class="sideBar-container">
+                   
+
+            <span class="side-bar">
+                 <span class="regle">
+    <strong>Règle fondamentale de RSA :</strong><br>
+    e × d ≡ 1 (mod φ(n))<br><br>
+
+    <strong>Avec :</strong><br>
+    • e : exposant public.<br>
+    • d : exposant privé.<br>
+    • φ(n) : indicateur d'Euler, calculé par (p − 1) × (q − 1).<br>
+    • n : module RSA, calculé par p × q.<br>
+    • p et q : deux grands nombres premiers secrets.<br><br>
+
+    <strong>Explication :</strong><br>
+    d est l'inverse multiplicatif de e modulo φ(n).
+    Autrement dit, le produit e × d doit donner un reste égal à 1
+    lorsqu'il est divisé par φ(n).
+</span>
+                <div class="save-restore">
+                <button type="button" class="save-btn">
+                    Sauvegarder JSON
+                </button>
+
+                <button type="button" class="restore-btn">
+                    Restaurer JSON
+                </button>
+
+                <input type="file"
+                    class="restore-file"
+                    accept=".json,application/json"
+                    hidden>
+            </div>
+            </span>
+            </div>
 
     <h2>Chiffrement RSA</h2>
 
@@ -629,16 +771,17 @@
 </div>
 </div>
 
-    <div>
+   
+
+</div>
+
+         <div>
         {% if erreur %}
     <div class="error-box">
         <strong>Erreur :</strong> {{ erreur }}
     </div>
 {% endif %}
     </div>
-
-</div>
-
 
     </div>
     
